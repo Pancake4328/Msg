@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--加载properties 文件-->
+    <properties resource="jdbc.properties"/>
+    <settings>
+        <!--配置日志-->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+        <!--转驼峰-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!--开启二级缓存-->
+        <setting name="cacheEnabled" value="true"/>
+    </settings>
+    <!--类型别名-->
+    <typeAliases>
+<!--        <typeAlias type="net.xju.entity.Student" alias="student"/>-->
+        <package name="javaee.msg.entity"/>
+    </typeAliases>
+
+    <!--配置分页插件-->
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <!--设置方言 以便插件能够正确地生成对应的分页语句-->
+            <property name="helperDialect" value="mysql"/>
+            <!--设置reasonable属性的值来启用或禁用分页参数的合理化，默认情况下为
+            true，表示当传入的页码小于 1 或大于总页数时，会自动纠正为合理的值。-->
+        </plugin>
+    </plugins>
+    <!--数据源环境-->
+    <environments default="development">
+        <environment id="development">
+            <!--事务管理器-->
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--加载映射文件-->
+    <mappers>
+<!--        <mapper resource="mapper/StudentMapper.xml"/>-->
+<!--        <package name="net.xju.mapper"/>-->
+        <mapper resource="mapper/MsgMapper.xml"/>
+        <mapper resource="mapper/UserMapper.xml"/>
+    </mappers>
+</configuration>
